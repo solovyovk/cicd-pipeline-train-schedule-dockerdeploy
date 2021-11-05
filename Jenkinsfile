@@ -41,7 +41,7 @@ pipeline {
             steps {
                 input 'Ready to deploy on Production?'
                 milestone(1)
-                withCredentials([credentialsId: 'deploy_usr', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS']) {
+                withCredentials([usernamePassword(credentialsId: 'deploy_usr', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
                         sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyCheking=no $USERNAME@$prod_ip \"docker pull ksolovyov/train-schedule:${env.BUILD_NUMBER}\""
                         try {
